@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="includes/styles.css">
+<title>Simple Text Tooltip Using JQuery Demo</title>
+<style>
+.wy-tooltip {
+	border: 1px solid #F1D031;
+	color: #444;
+	background: #FFFFA3;
+	box-shadow: 0 2px 3px #999;
+	position: absolute;
+	padding: 5px;
+	text-align: left;
+ 	border-radius: 5px;
+	 -moz-border-radius: 5px;
+	 -webkit-border-radius: 5px;
+}
+.wy-hide { display: none; }
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var Delay = 500, ToolTipTimer
+	$('.tooltip').hover(function(e){
+			// hover over
+			var title = $(this).attr('title');
+			$(this).data('ToolTipText', title).removeAttr('title');
+			$('<div class="wy-tooltip wy-hide"></div>').text(title).appendTo('body'); 		
+			 ToolTipTimer  = setTimeout(function(e) {
+				$('.wy-tooltip').removeClass('wy-hide').fadeIn('fast');
+			 },Delay);
+	}, function() {
+			// hover out
+			clearTimeout(ToolTipTimer);
+			$(this).attr('title', $(this).data('ToolTipText'));
+			$('.wy-tooltip').remove();
+	}).mousemove(function(e) {
+			// mouse move
+			var pLeft;
+			var pTop;
+			var offset = 10;
+			var CursorX = e.pageX;
+			var CursorY = e.pageY;
+			var WindowWidth = $(window).width();
+			var WindowHeight = $(window).height();
+			var toolTip = $('.wy-tooltip');
+			var TTWidth = toolTip.width();
+			var TTHeight = toolTip.height();	
+		
+			if (CursorX-offset >= (WindowWidth/4)*3) {
+				pLeft = CursorX - TTWidth - offset;
+			} else {
+				pLeft = CursorX + offset;
+			}
+			if (CursorY-offset >= (WindowHeight/4)*3) {
+				pTop = CursorY - TTHeight - offset;
+			} else {
+				pTop = CursorY + offset;
+			}
+			console.log('CursorX: '+CursorX);
+			console.log('CursorY: '+CursorY);
+			console.log('WindowWidth: '+WindowWidth);
+			console.log('WindowHeight: '+WindowHeight);
+			console.log('TTWidth: '+TTWidth);
+			console.log('TTHeight: '+TTHeight);
+			console.log('CursorX-offset: '+ (CursorX-offset));
+			console.log('(WindowWidth/4)*3: '+(WindowWidth/4)*3);
+			console.log('CursorY-offset: '+ (CursorY-offset));
+			console.log('(WindowHeight/4)*3: '+(WindowHeight/4)*3);		
+		
+			console.log('-----------------------------------');
+			$('.wy-tooltip').css({ top: pTop, left: pLeft })			
+	});
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<div class="sixteen columns">
+		<h1 class="tcenter">Simple Text Only Tooltip with JQuery</h1>
+		<p class="by">TUTORIAL BY WEBYURT <a href="/simple-text-only-tooltip-using-jquery">VIEW TUTORIAL</a></p>
+	</div>
+
+	<div class="sixteen columns">
+		<h2 class="line">Applied to a link</h2>
+		<div>
+		  <div class="left"><a href="#" title="I am a simple tooltip created with JQuery" class="tooltip">Hover over me</a></div>
+		  <div class="right"><a href="#" title="I am a simple tooltip created with JQuery" class="tooltip">Hover over me</a></div>
+		  <div class="clearfix"></div>
+		</div>
+
+		<h2 class="line">Applied to a text in paragraph</h2>
+		<p>Here is the paragraph, <span title="This is a paragraph" class="tooltip"><strong>hover over me</strong></span> to view tool tip text!</p>
+
+		<h2 class="line">Applied to a heading tag</h2>
+		<h2 title="This is a Heading tag" class="tooltip bold">I am a Heading, Hover Over Me!</h2>
+
+		<h2 class="line">Applied to buttons</h2>
+		<p>
+		<div>
+		  <div class="left"><input title="This is a button on the left" class="tooltip" type="button" name="button1" id="button1" value="Hover over me"></div>
+		  <div class="right"><input title="This is a button on the right" class="tooltip" type="button" name="button2" id="button2" value="Hover over me"></div>
+		  <div class="clearfix"></div>
+		</div>
+		</p>
+
+		<h2 class="line">Applied to an input field</h2>
+		<p>
+		 <input name="textfield" type="text" class="tooltip" id="textfield" title="This is an input field" value="Hover over me">
+		</p>
+
+		<h2 class="line">Applied to an image</h2>
+		<p><img title="This is a really cool image with our logo!" class="tooltip" src="images/logo-web-yurt-demo.jpg" width="700" height="455" alt=""/></p>
+	</div>
+</div>
+
+</body>
+</html>
